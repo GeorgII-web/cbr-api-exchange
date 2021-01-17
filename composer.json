@@ -1,0 +1,39 @@
+{
+  "name": "georgii-web/cbr-api-exchange",
+  "description": "Cbr.ru exchange rate API package. Gets currency rate from Russian Central Bank API, http://www.cbr.ru.",
+  "type": "library",
+  "require": {
+    "php": "^8.0",
+    "nesbot/carbon": "^2.16",
+    "ext-simplexml": "*",
+    "ext-libxml": "*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "GeorgII",
+      "email": "george.webfullstack@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "CbrApiExchange\\": "src/CbrApiExchange/"
+    },
+    "files": [
+      "src/CbrApiExchange/CbrApiExchange.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CbrApiExchange\\Providers\\CbrApiExchangeServiceProvider"
+      ]
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "roave/security-advisories": "dev-master",
+    "vimeo/psalm": "^4.3"
+  }
+}
