@@ -5,6 +5,11 @@
 
 namespace CbrApiExchange\Contracts;
 
+/**
+ * Interface ApiInterface
+ *
+ * @package CbrApiExchange\Contracts
+ */
 interface ApiInterface
 {
     public static function get();
