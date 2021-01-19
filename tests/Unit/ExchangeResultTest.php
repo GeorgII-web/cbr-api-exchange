@@ -65,7 +65,7 @@ test('USD on tomorrow exchange', function () {
     }
 
     if ($resException) {
-        expect($resException)->toBe('The exchange rate for tomorrow has not yet been announced');
+        expect($resException)->toBe('The exchange rate for tomorrow has not yet been announced.');
     } else {
         expect($res['code'] === $code && $res['date'] === $date)->toBeTrue();
     }
@@ -73,8 +73,8 @@ test('USD on tomorrow exchange', function () {
 
 test('USD on 2111-01-01 exception', function () {
     CbrApiExchange::get('R01235', '2111-01-01');
-})->throws(Exception::class, "Invalid date. The date '2111-01-01' is too far in the future");
+})->throws(Exception::class, "Invalid date. The date '2111-01-01' is too far in the future.");
 
 test('Undefined currency exception', function () {
     CbrApiExchange::get('R00000', '2021-01-01');
-})->throws(Exception::class, "Empty API response");
+})->throws(Exception::class, "Empty API response.");
