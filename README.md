@@ -42,10 +42,10 @@ CbrApiExchange::get('R01239', '2021-01-01'); // Get currency 'R01239'(EUR) on da
 
 ## Testing
 ```sh
-$ ./scripts/test.sh
+$ ./vendor/bin/pest
 ```
 
 ## Psalm check
 ```sh
-$ ./scripts/psalm.sh
+$ ./vendor/bin/psalm
 ```

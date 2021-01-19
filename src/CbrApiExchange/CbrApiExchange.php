@@ -72,7 +72,7 @@ class CbrApiExchange implements ApiInterface
 
         // Check currency rate for tomorrow date
         if (self::isTomorrowCurrencyRateExist($dateStr, $lastDate) === false) {
-            throw new StillNoTomorrowExchangeException("The exchange rate for tomorrow has not yet been announced.");
+            throw new StillNoTomorrowExchangeException("The exchange rate for tomorrow has not yet been announced");
         }
 
         // Check rate format
@@ -102,7 +102,7 @@ class CbrApiExchange implements ApiInterface
                 $parts = explode('-', $date);
                 $date = Carbon::createSafe((int)$parts[0], (int)$parts[1], (int)$parts[2])->format("Y-m-d");
             } catch (Exception) {
-                throw new InvalidArgumentException("Invalid date format.");
+                throw new InvalidArgumentException("Invalid date format");
             }
         } else {
             // Default date NOW
@@ -112,7 +112,7 @@ class CbrApiExchange implements ApiInterface
         // Only tomorrow date in the future allowed
         $point = Carbon::createFromDate($date);
         if (($point->isFuture()) && ($point->diffInDays(Carbon::today()) > 1)) {
-            throw new InvalidArgumentException("Invalid date. The date '{$point->format("Y-m-d")}' is too far in the future.");
+            throw new InvalidArgumentException("Invalid date. The date '{$point->format("Y-m-d")}' is too far in the future");
         }
 
         return $date;
@@ -131,7 +131,7 @@ class CbrApiExchange implements ApiInterface
             return $currency;
         }
 
-        throw new BadFormatException('Currency code unexpected format.');
+        throw new BadFormatException('Currency code unexpected format');
     }
 
     /**
@@ -174,7 +174,7 @@ class CbrApiExchange implements ApiInterface
         }
 
         if (!isset($response->Record)) {
-            throw new ResponseException('Empty API response.');
+            throw new ResponseException('Empty API response');
         }
 
         return $response;
