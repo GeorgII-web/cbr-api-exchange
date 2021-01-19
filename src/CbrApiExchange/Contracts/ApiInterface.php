@@ -12,5 +12,5 @@ namespace CbrApiExchange\Contracts;
  */
 interface ApiInterface
 {
-    public static function get();
+    public static function get(): mixed;
 }

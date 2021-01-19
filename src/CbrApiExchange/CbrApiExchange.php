@@ -59,8 +59,8 @@ class CbrApiExchange implements ApiInterface
 
         // Create cbr.ru API specific format url
         $cbrUrl = self::createCbrApiUrl(
-            Carbon::createFromDate($dateStr)->subMonths(),
-            Carbon::createFromDate($dateStr),
+            Carbon::parse($dateStr)->subMonths(),
+            Carbon::parse($dateStr),
             $currencyCode
         );
 
@@ -71,8 +71,8 @@ class CbrApiExchange implements ApiInterface
         [$lastDate, $lastRate] = self::getLastRecord($response);
 
         // Check currency rate for tomorrow date
-        if (self::isTomorrowCurrencyRateExist($dateStr, $lastDate) === false) {
-            throw new StillNoTomorrowExchangeException("The exchange rate for tomorrow has not yet been announced");
+        if (self::isTomorrowCurrencyRateExist($dateStr, (string)$lastDate) === false) {
+            throw new StillNoTomorrowExchangeException('The exchange rate for tomorrow has not yet been announced');
         }
 
         // Check rate format
@@ -100,9 +100,12 @@ class CbrApiExchange implements ApiInterface
         if ($date) {
             try {
                 $parts = explode('-', $date);
-                $date = Carbon::createSafe((int)$parts[0], (int)$parts[1], (int)$parts[2])->format("Y-m-d");
+                $dateObj = Carbon::createSafe((int)$parts[0], (int)$parts[1], (int)$parts[2]);
+                if ($dateObj) {
+                    $date = $dateObj->format("Y-m-d");
+                }
             } catch (Exception) {
-                throw new InvalidArgumentException("Invalid date format");
+                throw new InvalidArgumentException('Invalid date format');
             }
         } else {
             // Default date NOW
@@ -110,7 +113,7 @@ class CbrApiExchange implements ApiInterface
         }
 
         // Only tomorrow date in the future allowed
-        $point = Carbon::createFromDate($date);
+        $point = Carbon::parse($date);
         if (($point->isFuture()) && ($point->diffInDays(Carbon::today()) > 1)) {
             throw new InvalidArgumentException("Invalid date. The date '{$point->format("Y-m-d")}' is too far in the future");
         }
@@ -145,8 +148,8 @@ class CbrApiExchange implements ApiInterface
      */
     protected static function isTomorrowCurrencyRateExist(string $date, string $lastDate): ?bool
     {
-        $lastDateObj = Carbon::createFromDate($lastDate);
-        $dateObj = Carbon::createFromDate($date);
+        $lastDateObj = Carbon::parse($lastDate);
+        $dateObj = Carbon::parse($date);
         if ($dateObj->isTomorrow()) {
             return $lastDateObj === $dateObj;
         }
@@ -209,12 +212,14 @@ class CbrApiExchange implements ApiInterface
     {
         // Response has list of currencies on each date
         $records = [];
-        foreach ($response->Record as $record) {
-            $records[] = $record;
+        if (is_object($response)) {
+            foreach ($response->Record as $record) {
+                $records[] = $record;
+            }
         }
         $lastRecord = array_pop($records); // Last value from central bank at that moment
 
-        $lastDate = Carbon::createFromDate((string)$lastRecord['Date'])->format('Y-m-d'); // To '2021-01-01' format
+        $lastDate = Carbon::parse((string)$lastRecord['Date'])->format('Y-m-d'); // To '2021-01-01' format
         $lastRate = (float)str_replace(',', '.', (string)$lastRecord->Value); // Currency format from russian to foreign
 
         return [$lastDate, $lastRate];
