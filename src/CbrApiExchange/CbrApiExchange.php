@@ -34,7 +34,7 @@ class CbrApiExchange implements ApiInterface
 {
     /**
      * Get the currency rate on specified date from Central Bank API.
-     * The rate for the this day is announced yesterday by Central Bank.
+     * The rate for the this day is announced yesterday (before 15:00MSK) by Central Bank.
      * If no rate announced for this day (holidays) than it used last announced rate.
      *
      * @param string      $currency Currency code. 'R01235' for USD,'R01239' for EUR,'R01035' for GBP.
