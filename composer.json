@@ -37,5 +37,11 @@
     "vimeo/psalm": "^4.3",
     "pestphp/pest": "1.x-dev",
     "jetbrains/phpstorm-attributes": "dev-master"
+  },
+  "scripts": {
+    "test": [
+      "Composer\\Config::disableProcessTimeout",
+      "./vendor/bin/pest"
+    ]
   }
 }
