@@ -8,7 +8,7 @@
 
 ### Features
 <p>Centrak Bank announce exchange rate for tomorrow everyday (in a second part of the day).</p>
-<p>On holidays there are no announcements, so it use previous date of the exchange rate.</p>
+<p>On holidays there are no announcements, so it uses previous date of the exchange rate.</p>
 <p>For example, on 2020-12-31 at 08:00 we don't get exchange rate for 2021-01-01, but at 21:00 we'll get it. And if we check exchange rate on 2021-01-04 we get it for 2021-01-01.</p>
 
 ## Install
