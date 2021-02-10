@@ -15,7 +15,7 @@ use CbrApiExchange\Exceptions\XmlException;
 use Exception;
 use Carbon\Carbon;
 use InvalidArgumentException;
-use JetBrains\PhpStorm\ArrayShape;
+// use JetBrains\PhpStorm\ArrayShape;
 use LibXMLError;
 use SimpleXMLElement;
 
@@ -46,11 +46,11 @@ class CbrApiExchange implements ApiInterface
      * @throws XmlException XML format errors
      * @throws Exception General exceptions
      */
-    #[ArrayShape([
-        'code' => 'string', // Code of the requested currency, 'R01235'->USD
-        'date' => 'string', // Date of the last response value, '2021-01-01'
-        'rate' => 'float' // Rate of the last response value, 73.8757
-    ])]
+    // #[ArrayShape([
+    //     'code' => 'string', // Code of the requested currency, 'R01235'->USD
+    //     'date' => 'string', // Date of the last response value, '2021-01-01'
+    //     'rate' => 'float' // Rate of the last response value, 73.8757
+    // ])]
     public static function get(string $currency = 'R01235', string $date = null): array
     {
         // Check inputted data
@@ -104,7 +104,7 @@ class CbrApiExchange implements ApiInterface
                 if ($dateObj) {
                     $date = $dateObj->format("Y-m-d");
                 }
-            } catch (Exception) {
+            } catch (Exception $e) {
                 throw new InvalidArgumentException('Invalid date format.');
             }
         } else {
@@ -164,7 +164,7 @@ class CbrApiExchange implements ApiInterface
      * @throws ResponseException Empty API response
      * @throws XmlException XML format errors
      */
-    protected static function makeCbrApiRequest(string $cbrUrl): SimpleXMLElement|string
+    private static function makeCbrApiRequest(string $cbrUrl): SimpleXMLElement
     {
         try {
             $response = simplexml_load_string(file_get_contents($cbrUrl));
@@ -204,11 +204,11 @@ class CbrApiExchange implements ApiInterface
      * @param SimpleXMLElement|string $response Response from cbr.ru API
      * @return array Array: (string)lastDate and (float)lastRate
      */
-    #[ArrayShape([
-        'string', // lastDate 'Y-m-d'
-        'float' // lastRate 5.1234
-    ])]
-    protected static function getLastRecord(SimpleXMLElement|string $response): array
+    // #[ArrayShape([
+    //     'string', // lastDate 'Y-m-d'
+    //     'float' // lastRate 5.1234
+    // ])]
+    protected static function getLastRecord(SimpleXMLElement $response): array
     {
         // Response has list of currencies on each date
         $records = [];

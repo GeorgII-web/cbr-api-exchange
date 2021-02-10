@@ -14,8 +14,14 @@ use LibXMLError;
  */
 class XmlException extends Exception
 {
-    #[Pure] public function __construct(private Exception $exception, private LibXMLError $xmlError)
+    // #[Pure]
+    private Exception $exception;
+    private LibXMLError $xmlError;
+
+    public function __construct(Exception $exception, LibXMLError $xmlError)
     {
+        $this->xmlError = $xmlError;
+        $this->exception = $exception;
         parent::__construct($exception->message, $exception->code);
     }
 

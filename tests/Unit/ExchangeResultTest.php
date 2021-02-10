@@ -4,7 +4,6 @@ use CbrApiExchange\CbrApiExchange;
 
 class ExchangeResultTest
 {
-
     /**
      * Check if exchange result is right
      *
@@ -29,7 +28,6 @@ class ExchangeResultTest
             ];
     }
 }
-
 
 test('USD on 2021-01-01 result', function () {
     expect((new ExchangeResultTest())->assertExchange('R01235', '2021-01-01', '2021-01-01', 73.8757))->toBeTrue();

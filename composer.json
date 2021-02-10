@@ -3,7 +3,7 @@
   "description": "Cbr.ru exchange rate API package. Gets currency rate from Russian Central Bank API, http://www.cbr.ru.",
   "type": "library",
   "require": {
-    "php": "^8.0",
+    "php": "^7.4|^8.0",
     "nesbot/carbon": "^2.16",
     "ext-simplexml": "*",
     "ext-libxml": "*"
