@@ -151,7 +151,7 @@ class CbrApiExchange implements ApiInterface
         $lastDateObj = Carbon::parse($lastDate);
         $dateObj = Carbon::parse($date);
         if ($dateObj->isTomorrow()) {
-            return $lastDateObj === $dateObj;
+            return $lastDateObj->eq($dateObj);
         }
         return null;
     }
@@ -160,7 +160,7 @@ class CbrApiExchange implements ApiInterface
      * Get currency rate from cbr.ru API by specified url.
      *
      * @param string $cbrUrl Cbr.ru API formatted url string
-     * @return SimpleXMLElement|string List of currency rates by days
+     * @return SimpleXMLElement List of currency rates by days
      * @throws ResponseException Empty API response
      * @throws XmlException XML format errors
      */
@@ -201,7 +201,7 @@ class CbrApiExchange implements ApiInterface
     /**
      * Get last record from list of currencies.
      *
-     * @param SimpleXMLElement|string $response Response from cbr.ru API
+     * @param SimpleXMLElement $response Response from cbr.ru API
      * @return array Array: (string)lastDate and (float)lastRate
      */
     // #[ArrayShape([
@@ -212,10 +212,8 @@ class CbrApiExchange implements ApiInterface
     {
         // Response has list of currencies on each date
         $records = [];
-        if (is_object($response)) {
-            foreach ($response->Record as $record) {
-                $records[] = $record;
-            }
+        foreach ($response->Record as $record) {
+            $records[] = $record;
         }
         $lastRecord = array_pop($records); // Last value from central bank at that moment
 

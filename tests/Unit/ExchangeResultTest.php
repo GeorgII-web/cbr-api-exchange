@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use CbrApiExchange\CbrApiExchange;
 
 class ExchangeResultTest
@@ -51,7 +52,7 @@ test('GBP on 2021-01-16 result', function () {
 
 test('USD on tomorrow exchange', function () {
     $code = 'R01235';
-    $date = '2021-01-19';
+    $date = Carbon::now()->addDay()->toDateString(); //'2023-10-17';
 
     try {
         //tomorrow exchange announced
